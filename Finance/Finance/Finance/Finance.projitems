@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>{D4189A63-AB89-4252-AA4E-59DEA14F257E}</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Finance</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)App.xaml" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)MainPage.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Collection\ITransactionCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Collection\TransactionCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DatabaseConnector\DatabaseConnector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DatabaseConnector\IDatabaseConnector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Database_Context\Context.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Transaction.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\TransactionType.cs" />
+  </ItemGroup>
+</Project>
