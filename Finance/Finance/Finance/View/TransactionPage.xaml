@@ -1,0 +1,23 @@
+﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Finance.View.TransactionPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding Save}" Text="Save"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout Margin="10">
+            <Label Text="Amount" HorizontalTextAlignment="Center"/>
+            <Entry Text="{Binding TransactionItem.Value.Ammount}" HorizontalTextAlignment="Center"/>
+            <Label Text="Type" HorizontalTextAlignment="Center"/>
+            <ListView ItemsSource="{Binding TransactionTypes}" SelectedItem="{Binding TransactionItem.Value.Type}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Label Text="{Binding Value}" HorizontalTextAlignment="Center" FontSize="18"/>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

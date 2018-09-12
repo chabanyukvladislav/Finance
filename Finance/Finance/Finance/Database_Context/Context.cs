@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SQLitePCL;
 using System;
 using System.IO;
+using System.Linq;
 using Xamarin.Forms;
 
 namespace Finance.Database_Context
@@ -18,6 +19,12 @@ namespace Finance.Database_Context
         {
             Database.EnsureCreated();
             Transactions.CountAsync();
+            if (TransactionTypes.ToList().Count == 0)
+            {
+                TransactionTypes.Add(new TransactionType() { Value = "Expense" });
+                TransactionTypes.Add(new TransactionType() { Value = "Income" });
+                SaveChanges();
+            }
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

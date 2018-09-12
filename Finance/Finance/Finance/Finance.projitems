@@ -10,21 +10,66 @@
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)App.xaml" />
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)MainPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Collection\ITransactionCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Collection\ICollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collection\TransactionCollection.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)DatabaseConnector\DatabaseConnector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Collection\TransactionTypeCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Control\GridCell.xaml.cs">
+      <DependentUpon>GridCell.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)DatabaseConnector\DatabaseTransactionConnector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DatabaseConnector\DatabaseTransactionTypeConnector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DatabaseConnector\IDatabaseConnector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Database_Context\Context.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Model\IDatabaseModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Transaction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\TransactionType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validation\IValidationRule.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validation\NumberValidator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Validation\ValidatableObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\MainViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\ReportViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\TransactionViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)View\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)View\ReportPage.xaml.cs">
+      <DependentUpon>ReportPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)View\TransactionPage.xaml.cs">
+      <DependentUpon>TransactionPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)View\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)View\TransactionPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)View\ReportPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Control\GridCell.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

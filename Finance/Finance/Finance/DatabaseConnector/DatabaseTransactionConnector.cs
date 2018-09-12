@@ -7,14 +7,14 @@ using Finance.Model;
 
 namespace Finance.DatabaseConnector
 {
-    class DatabaseConnector : IDatabaseConnector
+    class DatabaseTransactionConnector : IDatabaseConnector<Transaction>
     {
-        private static DatabaseConnector _databaseConnector;
+        private static DatabaseTransactionConnector _databaseConnector;
         private static readonly object Locker = new object();
 
         private readonly Context _context;
 
-        public static DatabaseConnector GetDatabaseConnector
+        public static DatabaseTransactionConnector GetDatabaseConnector
         {
             get
             {
@@ -23,7 +23,7 @@ namespace Finance.DatabaseConnector
                     lock (Locker)
                     {
                         if (_databaseConnector == null)
-                            _databaseConnector = new DatabaseConnector();
+                            _databaseConnector = new DatabaseTransactionConnector();
                     }
                 }
 
@@ -31,7 +31,7 @@ namespace Finance.DatabaseConnector
             }
         }
 
-        private DatabaseConnector()
+        private DatabaseTransactionConnector()
         {
             _context = new Context();
         }
@@ -50,7 +50,7 @@ namespace Finance.DatabaseConnector
                 }
             });
         }
-        public async Task<bool> Add(Transaction item)
+        public async Task<Transaction> Add(Transaction item)
         {
             return await Task.Run(() =>
             {
@@ -59,17 +59,17 @@ namespace Finance.DatabaseConnector
                     item.Date = DateTime.Now;
                     _context.Transactions.Add(item);
                     _context.SaveChanges();
-                    return true;
+                    return item;
                 }
                 catch (Exception)
                 {
-                    return false;
+                    return null;
                 }
             });
         }
         public async Task<bool> Edit(Transaction newItem)
         {
-            await Task.Run(() =>
+            return await Task.Run(() =>
             {
                 try
                 {
@@ -80,7 +80,7 @@ namespace Finance.DatabaseConnector
                     _context.SaveChanges();
                     return true;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     return false;
                 }
@@ -88,7 +88,7 @@ namespace Finance.DatabaseConnector
         }
         public async Task<bool> Delete(Transaction item)
         {
-            await Task.Run(() =>
+            return await Task.Run(() =>
             {
                 try
                 {

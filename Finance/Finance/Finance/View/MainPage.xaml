@@ -1,0 +1,22 @@
+﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:my="clr-namespace:Finance.Control"
+             x:Class="Finance.View.MainPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding Report}" Text="Report"/>
+        <ToolbarItem Command="{Binding Add}" Text="Add"/>
+        <ToolbarItem Command="{Binding Edit}" Text="Edit"/>
+        <ToolbarItem Command="{Binding Delete}" Text="Delete"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <ListView ItemsSource="{Binding Transactions}" SelectedItem="{Binding SelectedItem}" Margin="10">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <my:GridCell ItemSource="{Binding}" />
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ContentPage.Content>
+</ContentPage>

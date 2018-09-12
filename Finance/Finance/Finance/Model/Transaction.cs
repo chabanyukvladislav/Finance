@@ -1,12 +1,25 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace Finance.Model
 {
-    class Transaction
+    public class Transaction : IDatabaseModel, INotifyPropertyChanged
     {
+        private string _amount;
+
         public int Id { get; set; }
-        public int Ammount { get; set; }
+        public string Ammount
+        {
+            get => _amount;
+            set
+            {
+                _amount = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Ammount)));
+            }
+        }
         public DateTime Date { get; set; }
-        public virtual Transaction_Type Type { get; set; }
+        public virtual TransactionType Type { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

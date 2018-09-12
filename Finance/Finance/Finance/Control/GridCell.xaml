@@ -1,0 +1,14 @@
+﻿<Grid xmlns="http://xamarin.com/schemas/2014/forms" 
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+      x:Class="Finance.Control.GridCell"
+      ColumnSpacing="0">
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+
+    <Label Grid.Column="0" x:Name="date" HorizontalTextAlignment="Center"/>
+    <Label Grid.Column="1" x:Name="type" HorizontalTextAlignment="Center"/>
+    <Label Grid.Column="2" x:Name="amount" HorizontalTextAlignment="Center"/>
+</Grid>

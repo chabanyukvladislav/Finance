@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using Finance.Model;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Finance.Model;
 
 namespace Finance.DatabaseConnector
 {
-    interface IDatabaseConnector
+    interface IDatabaseConnector<T> where T : IDatabaseModel
     {
-        Task<List<Transaction>> Get();
-        Task<bool> Add(Transaction item);
-        Task<bool> Edit(Transaction newItem);
-        Task<bool> Delete(Transaction item);
+        Task<List<T>> Get();
+        Task<T> Add(T item);
+        Task<bool> Edit(T newItem);
+        Task<bool> Delete(T item);
     }
 }
