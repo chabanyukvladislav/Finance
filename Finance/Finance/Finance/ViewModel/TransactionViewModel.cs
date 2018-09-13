@@ -13,7 +13,7 @@ namespace Finance.ViewModel
         private readonly ICollection<Transaction> _transactionCollection;
         private readonly ICollection<TransactionType> _transactionTypeCollection;
         private ObservableCollection<TransactionType> _transactionTypes;
-        private readonly Transaction _item;
+        private ValidatableObject _transactionItem;
 
         public ObservableCollection<TransactionType> TransactionTypes
         {
@@ -25,7 +25,15 @@ namespace Finance.ViewModel
             }
         }
 
-        public ValidatableObject TransactionItem { get; private set; }
+        public ValidatableObject TransactionItem
+        {
+            get => _transactionItem;
+            private set
+            {
+                _transactionItem = value;
+                OnPropertyChanged(nameof(TransactionItem));
+            }
+        }
 
         public ICommand Save { get; }
 
@@ -36,7 +44,7 @@ namespace Finance.ViewModel
             _transactionTypeCollection = TransactionTypeCollection.GetTransactionTypeCollection;
             _transactionTypeCollection.PropertyChanged += OnCollectionPropertyChanged;
             _transactionTypes = _transactionTypeCollection.Collection;
-            _item = new Transaction();
+            TransactionItem = new ValidatableObject(new Transaction(), new NumberValidator());
         }
         public TransactionViewModel(Transaction item)
         {
@@ -45,7 +53,7 @@ namespace Finance.ViewModel
             _transactionTypeCollection = TransactionTypeCollection.GetTransactionTypeCollection;
             _transactionTypeCollection.PropertyChanged += OnCollectionPropertyChanged;
             _transactionTypes = _transactionTypeCollection.Collection;
-            _item = item;
+            TransactionItem = new ValidatableObject(item, new NumberValidator());
         }
 
         private async void ExecuteSave()
@@ -64,8 +72,6 @@ namespace Finance.ViewModel
             if (e.PropertyName == nameof(_transactionTypeCollection.Collection))
             {
                 TransactionTypes = _transactionTypeCollection.Collection;
-                TransactionItem = new ValidatableObject(_item, new NumberValidator());
-                OnPropertyChanged(nameof(TransactionItem));
             }
         }
         private void OnPropertyChanged(string propertyName)

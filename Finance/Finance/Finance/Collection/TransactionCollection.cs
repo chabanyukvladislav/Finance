@@ -56,7 +56,7 @@ namespace Finance.Collection
         {
             if (!await _connector.Add(item))
                 return;
-            _collection.Add(item);
+            _collection.Insert(0, item);
         }
         public async void Delete(Transaction item)
         {
@@ -68,8 +68,10 @@ namespace Finance.Collection
         {
             if (!await _connector.Edit(newItem))
                 return;
-            _collection.Remove(newItem);
-            _collection.Add(newItem);
+            int index = _collection.IndexOf(_collection.FirstOrDefault(el => el.Id == newItem.Id));
+            for (int i = index - 1; i >= 0; --i)
+                _collection[i + 1] = _collection[i];
+            _collection[0] = newItem;
         }
 
         private void OnPropertyChanged(string propertyName)
