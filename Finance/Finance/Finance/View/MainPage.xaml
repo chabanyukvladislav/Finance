@@ -14,7 +14,7 @@
         <ToolbarItem Command="{Binding Delete}" Text="Delete"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <ListView ItemsSource="{Binding Transactions}" SelectedItem="{Binding SelectedItem}" Margin="10">
+        <ListView ItemsSource="{Binding Transactions}" SelectedItem="{Binding SelectedItem}" Margin="10" x:Name="list">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>

@@ -35,8 +35,10 @@ namespace Finance.Control
 
             if (propertyName == ItemSourceProperty.PropertyName)
             {
-                if(ItemSource == null || ItemSource.Id == 0)
+                if (ItemSource == null || ItemSource.Id == 0)
+                {
                     return;
+                }
                 InitializeItem();
             }
         }

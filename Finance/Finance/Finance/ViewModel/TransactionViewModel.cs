@@ -32,14 +32,11 @@ namespace Finance.ViewModel
         public TransactionViewModel()
         {
             Save = new Command(ExecuteSave);
-            TransactionItem = new ValidatableObject(new NumberValidator())
-            {
-                Value = new Transaction()
-            };
             _transactionCollection = TransactionCollection.GetTransactionCollection;
             _transactionTypeCollection = TransactionTypeCollection.GetTransactionTypeCollection;
             _transactionTypeCollection.PropertyChanged += OnCollectionPropertyChanged;
             _transactionTypes = _transactionTypeCollection.Collection;
+            _item = new Transaction();
         }
         public TransactionViewModel(Transaction item)
         {
@@ -67,7 +64,7 @@ namespace Finance.ViewModel
             if (e.PropertyName == nameof(_transactionTypeCollection.Collection))
             {
                 TransactionTypes = _transactionTypeCollection.Collection;
-                TransactionItem = new ValidatableObject(new NumberValidator()) { Value = _item };
+                TransactionItem = new ValidatableObject(_item, new NumberValidator());
                 OnPropertyChanged(nameof(TransactionItem));
             }
         }

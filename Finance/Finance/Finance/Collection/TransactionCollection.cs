@@ -68,6 +68,8 @@ namespace Finance.Collection
         {
             if (!await _connector.Edit(newItem))
                 return;
+            _collection.Remove(newItem);
+            _collection.Add(newItem);
         }
 
         private void OnPropertyChanged(string propertyName)

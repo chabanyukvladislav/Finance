@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using Finance.Model;
 
@@ -14,7 +13,7 @@ namespace Finance.Validation
         public Transaction Value
         {
             get => _value;
-            set
+            private set
             {
                 _value = value;
                 _value.PropertyChanged += OnPropertyChanged;
@@ -23,8 +22,9 @@ namespace Finance.Validation
 
         public bool IsValid => Validations.TrueForAll(v => v.Validate(Value.Ammount));
 
-        public ValidatableObject(params IValidationRule[] validations)
+        public ValidatableObject(Transaction item, params IValidationRule[] validations)
         {
+            Value = item;
             Validations = new List<IValidationRule>();
             foreach (var val in validations)
                 Validations.Add(val);
