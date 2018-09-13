@@ -53,18 +53,21 @@ namespace Finance.ViewModel
         private async void ExecuteAdd()
         {
             await Application.Current.MainPage.Navigation.PushAsync(new TransactionPage());
+            SelectedItem = null;
         }
         private async void ExecuteEdit()
         {
-            if(SelectedItem == null)
+            if (SelectedItem == null)
                 return;
             await Application.Current.MainPage.Navigation.PushAsync(new TransactionPage(SelectedItem));
+            SelectedItem = null;
         }
         private void ExecuteDelete(object item)
         {
             if (SelectedItem == null)
                 return;
             _collection.Delete(SelectedItem);
+            SelectedItem = null;
         }
         private async void ExecuteReport(object obj)
         {
@@ -73,11 +76,8 @@ namespace Finance.ViewModel
 
         private void OnCollectionPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(_collection.Collection))
-            {
-                SelectedItem = null;
-                Transactions = _collection.Collection;
-            }
+            SelectedItem = null;
+            Transactions = _collection.Collection;
         }
         private void OnPropertyChanged(string propertyName)
         {

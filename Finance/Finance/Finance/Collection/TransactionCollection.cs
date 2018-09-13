@@ -8,7 +8,6 @@ namespace Finance.Collection
 {
     class TransactionCollection : ICollection<Transaction>
     {
-
         private static TransactionCollection _transactionCollection;
         private static readonly object Locker = new object();
 
@@ -50,31 +49,25 @@ namespace Finance.Collection
 
         private async void LoadCollection()
         {
-            Collection = new ObservableCollection<Transaction>(await _connector.Get());
+            Collection = new ObservableCollection<Transaction>((await _connector.Get()).OrderByDescending(el => el.Date));
         }
 
         public async void Add(Transaction item)
         {
-            Transaction transaction = await _connector.Add(item);
-            if (transaction == null)
+            if (!await _connector.Add(item))
                 return;
-            _collection.Add(transaction);
-            OnPropertyChanged(nameof(Collection));
+            _collection.Add(item);
         }
         public async void Delete(Transaction item)
         {
             if (!await _connector.Delete(item))
                 return;
             _collection.Remove(item);
-            OnPropertyChanged(nameof(Collection));
         }
         public async void Edit(Transaction newItem)
         {
             if (!await _connector.Edit(newItem))
                 return;
-            _collection.Remove(_collection.FirstOrDefault(el => el.Id == newItem.Id));
-            _collection.Add(newItem);
-            OnPropertyChanged(nameof(Collection));
         }
 
         private void OnPropertyChanged(string propertyName)

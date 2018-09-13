@@ -51,9 +51,9 @@ namespace Finance.DatabaseConnector
             });
         }
 
-        public async Task<TransactionType> Add(TransactionType item)
+        public async Task<bool> Add(TransactionType item)
         {
-            return await Task.Run(() => { return (TransactionType)null; }); // !!!
+            return await Task.Run(() => { return false; });
         }
         public async Task<bool> Edit(TransactionType newItem)
         {

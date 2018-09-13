@@ -18,7 +18,7 @@ namespace Finance.Model
             }
         }
         public DateTime Date { get; set; }
-        public virtual TransactionType Type { get; set; }
+        public TransactionType Type { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

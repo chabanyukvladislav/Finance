@@ -13,7 +13,7 @@ namespace Finance.ViewModel
         private readonly ICollection<Transaction> _transactionCollection;
         private readonly ICollection<TransactionType> _transactionTypeCollection;
         private ObservableCollection<TransactionType> _transactionTypes;
-        private TransactionType _type;
+        private readonly Transaction _item;
 
         public ObservableCollection<TransactionType> TransactionTypes
         {
@@ -25,7 +25,7 @@ namespace Finance.ViewModel
             }
         }
 
-        public ValidatableObject TransactionItem { get; }
+        public ValidatableObject TransactionItem { get; private set; }
 
         public ICommand Save { get; }
 
@@ -48,8 +48,7 @@ namespace Finance.ViewModel
             _transactionTypeCollection = TransactionTypeCollection.GetTransactionTypeCollection;
             _transactionTypeCollection.PropertyChanged += OnCollectionPropertyChanged;
             _transactionTypes = _transactionTypeCollection.Collection;
-            TransactionItem = new ValidatableObject(new NumberValidator()) { Value = item };
-            _type = item.Type;
+            _item = item;
         }
 
         private async void ExecuteSave()
@@ -68,10 +67,8 @@ namespace Finance.ViewModel
             if (e.PropertyName == nameof(_transactionTypeCollection.Collection))
             {
                 TransactionTypes = _transactionTypeCollection.Collection;
-                if (TransactionItem.Value.Type == null)
-                {
-                    TransactionItem.Value.Type = _type;
-                }
+                TransactionItem = new ValidatableObject(new NumberValidator()) { Value = _item };
+                OnPropertyChanged(nameof(TransactionItem));
             }
         }
         private void OnPropertyChanged(string propertyName)

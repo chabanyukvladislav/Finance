@@ -1,4 +1,6 @@
-﻿namespace Finance.Model
+﻿using System.Collections.Generic;
+
+namespace Finance.Model
 {
     public class TransactionType : IDatabaseModel
     {

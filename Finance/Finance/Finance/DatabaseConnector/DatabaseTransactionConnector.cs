@@ -50,7 +50,7 @@ namespace Finance.DatabaseConnector
                 }
             });
         }
-        public async Task<Transaction> Add(Transaction item)
+        public async Task<bool> Add(Transaction item)
         {
             return await Task.Run(() =>
             {
@@ -59,11 +59,11 @@ namespace Finance.DatabaseConnector
                     item.Date = DateTime.Now;
                     _context.Transactions.Add(item);
                     _context.SaveChanges();
-                    return item;
+                    return true;
                 }
                 catch (Exception)
                 {
-                    return null;
+                    return false;
                 }
             });
         }
@@ -73,14 +73,12 @@ namespace Finance.DatabaseConnector
             {
                 try
                 {
-                    Transaction item = _context.Transactions.FirstOrDefault(el => el.Id == newItem.Id);
-                    item.Date = DateTime.Now;
-                    item.Ammount = newItem.Ammount;
-                    item.Type = newItem.Type;
+                    newItem.Date = DateTime.Now;
+                    newItem.Type = _context.TransactionTypes.FirstOrDefault(el => el.Id == newItem.Type.Id);
                     _context.SaveChanges();
                     return true;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return false;
                 }
