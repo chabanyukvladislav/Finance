@@ -19,6 +19,7 @@ namespace Finance.Model
         }
         public DateTime Date { get; set; }
         public TransactionType Type { get; set; }
+        public string Total { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

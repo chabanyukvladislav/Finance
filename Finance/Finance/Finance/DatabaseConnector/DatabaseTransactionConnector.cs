@@ -56,7 +56,17 @@ namespace Finance.DatabaseConnector
             {
                 try
                 {
+                    List<Transaction> list = _context.Transactions?.OrderBy(el => el.Date)?.ToList();
                     item.Date = DateTime.Now;
+                    item.Total = item.Ammount;
+                    if (_context.Transactions.Count() != 0)
+                    {
+                        item.Total = item.Type.Value == "Income"
+                            ? (Convert.ToInt32(list.Last().Total) + Convert.ToInt32(item.Ammount))
+                            .ToString()
+                            : (Convert.ToInt32(list.Last().Total) - Convert.ToInt32(item.Ammount))
+                            .ToString();
+                    }
                     _context.Transactions.Add(item);
                     _context.SaveChanges();
                     return true;
@@ -73,8 +83,23 @@ namespace Finance.DatabaseConnector
             {
                 try
                 {
-                    newItem.Date = DateTime.Now;
-                    newItem.Type = _context.TransactionTypes.FirstOrDefault(el => el.Id == newItem.Type.Id);
+                    Transaction preItem = _context.Transactions?.OrderBy(el => el.Date)?.LastOrDefault(el => el.Date < newItem.Date);
+                    if (preItem != null)
+                        newItem.Total = newItem.Type.Value == "Income"
+                            ? (Convert.ToInt32(preItem.Total) + Convert.ToInt32(newItem.Ammount)).ToString()
+                            : (Convert.ToInt32(preItem.Total) - Convert.ToInt32(newItem.Ammount)).ToString();
+                    else
+                        newItem.Total = newItem.Type.Value == "Income" ? newItem.Ammount : "-" + newItem.Ammount;
+                    List<Transaction> list = _context.Transactions?.Where(el => el.Date > newItem.Date)?.OrderBy(el => el.Date)?.ToList() ?? new List<Transaction>();
+                    if (list.Count > 0)
+                        list[0].Total = list[0].Type.Value == "Income"
+                            ? (Convert.ToInt32(newItem.Total) + Convert.ToInt32(list[0].Ammount)).ToString()
+                            : (Convert.ToInt32(newItem.Total) - Convert.ToInt32(list[0].Ammount)).ToString();
+                    for (int i = 1; i < list.Count; ++i)
+                        list[i].Total = list[i].Type.Value == "Income"
+                            ? (Convert.ToInt32(list[i - 1].Total) + Convert.ToInt32(list[i].Ammount)).ToString()
+                            : (Convert.ToInt32(list[i - 1].Total) - Convert.ToInt32(list[i].Ammount)).ToString();
+                    newItem.Type = _context.TransactionTypes?.FirstOrDefault(el => el.Id == newItem.Type.Id);
                     _context.SaveChanges();
                     return true;
                 }
@@ -90,6 +115,22 @@ namespace Finance.DatabaseConnector
             {
                 try
                 {
+                    Transaction preItem = _context.Transactions?.OrderBy(el => el.Date)?.LastOrDefault(el => el.Date < item.Date);
+                    List<Transaction> list = _context.Transactions?.Where(el => el.Date > item.Date)?.OrderBy(el => el.Date)?.ToList();
+                    if (list.Count != 0)
+                    {
+                        if (preItem != null)
+                            list[0].Total = list[0].Type.Value == "Income"
+                                ? (Convert.ToInt32(preItem.Total) + Convert.ToInt32(list[0].Ammount)).ToString()
+                                : (Convert.ToInt32(preItem.Total) - Convert.ToInt32(list[0].Ammount)).ToString();
+                        else
+                            list[0].Total = list[0].Type.Value == "Income" ? list[0].Ammount : "-" + list[0].Ammount;
+                        for (int i = 1; i < list.Count; ++i)
+                            list[i].Total = list[i].Type.Value == "Income"
+                                ? (Convert.ToInt32(list[i - 1].Total) + Convert.ToInt32(list[i].Ammount)).ToString()
+                                : (Convert.ToInt32(list[i - 1].Total) - Convert.ToInt32(list[i].Ammount))
+                                .ToString();
+                    }
                     _context.Transactions.Remove(item);
                     _context.SaveChanges();
                     return true;

@@ -1,56 +1,23 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Diagnostics;
+﻿using System.ComponentModel;
 using System.Windows.Input;
-using Finance.Collection;
-using Finance.Model;
 using Finance.View;
 using Xamarin.Forms;
 
 namespace Finance.ViewModel
 {
-    class MainViewModel : INotifyPropertyChanged
+    class MainViewModel : BaseViewModel
     {
-        private readonly ICollection<Transaction> _collection;
-        private ObservableCollection<Transaction> _transactions;
-        private Transaction _selectedItem;
-
-        public ObservableCollection<Transaction> Transactions
-        {
-            get => _transactions;
-            private set
-            {
-                _transactions = value;
-                OnPropertyChanged(nameof(Transactions));
-            }
-        }
-
-        public Transaction SelectedItem
-        {
-            get => _selectedItem;
-            set
-            {
-                _selectedItem = value;
-                OnPropertyChanged(nameof(SelectedItem));
-            }
-        }
-
         public ICommand Add { get; }
         public ICommand Edit { get; }
         public ICommand Delete { get; }
         public ICommand Report { get; }
 
-        public MainViewModel()
+        public MainViewModel() : base()
         {
             Add = new Command(ExecuteAdd);
             Edit = new Command(ExecuteEdit);
             Delete = new Command(ExecuteDelete);
             Report = new Command(ExecuteReport);
-            _collection = TransactionCollection.GetTransactionCollection;
-            _collection.PropertyChanged += OnCollectionPropertyChanged;
-            Transactions = _collection.Collection;
         }
 
         private async void ExecuteAdd()
@@ -77,16 +44,10 @@ namespace Finance.ViewModel
             await Application.Current.MainPage.Navigation.PushAsync(new ReportPage());
         }
 
-        private void OnCollectionPropertyChanged(object sender, PropertyChangedEventArgs e)
+        protected override void OnCollectionPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            base.OnCollectionPropertyChanged(sender, e);
             SelectedItem = null;
-            Transactions = _collection.Collection;
         }
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

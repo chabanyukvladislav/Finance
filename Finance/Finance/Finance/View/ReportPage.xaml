@@ -1,10 +1,88 @@
 ﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:my="clr-namespace:Finance.Control"
+             xmlns:vm="clr-namespace:Finance.ViewModel"
              x:Class="Finance.View.ReportPage">
-    <ContentPage.ToolbarItems>
-        
-    </ContentPage.ToolbarItems>
+    <ContentPage.BindingContext>
+        <vm:ReportViewModel />
+    </ContentPage.BindingContext>
+
     <ContentPage.Content>
-        
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="10*" />
+            </Grid.RowDefinitions>
+
+            <StackLayout Grid.Row="0" Orientation="Horizontal" HorizontalOptions="Center" Margin="5">
+                <Label Text="From" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                <DatePicker Date="{Binding From}"/>
+                <Label Text="To" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                <DatePicker Date="{Binding To}" />
+            </StackLayout>
+
+            <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Center" Margin="5, 0, 5, 0">
+                <Label Text="Type" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                <ListView ItemsSource="{Binding Types}" SelectedItem="{Binding SelectedType, Mode=TwoWay}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Label Text="{Binding Value}" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Button Text="Clear" Command="{Binding Clear}"/>
+            </StackLayout>
+
+            <ListView ItemsSource="{Binding Transactions}" SelectedItem="{Binding SelectedItem}" Margin="10" x:Name="list" Grid.Row="2">
+                <ListView.Header>
+                    <Grid ColumnSpacing="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="0" HorizontalTextAlignment="Center" Text="Date" FontAttributes="Bold">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding DateSort}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Grid.Column="1" HorizontalTextAlignment="Center" Text="Type" FontAttributes="Bold">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding TypeSort}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Grid.Column="2" HorizontalTextAlignment="Center" Text="Ammount" FontAttributes="Bold">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding AmmountSort}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Grid>
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <my:GridCell ItemSource="{Binding}" />
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.Footer>
+                    <Grid ColumnSpacing="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="0" HorizontalTextAlignment="Center" Text="{Binding FirstTotal}" FontAttributes="Bold"/>
+                        <Label Grid.Column="1" HorizontalTextAlignment="Center" Text="{Binding LastTotal}" FontAttributes="Bold"/>
+                        <Label Grid.Column="2" HorizontalTextAlignment="Center" Text="{Binding Sum}" FontAttributes="Bold"/>
+                    </Grid>
+                </ListView.Footer>
+            </ListView>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

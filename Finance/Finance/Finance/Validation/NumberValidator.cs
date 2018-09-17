@@ -8,7 +8,7 @@ namespace Finance.Validation
 
         public bool Validate(string value)
         {
-            if (string.IsNullOrEmpty(value)) return false;
+            if (string.IsNullOrEmpty(value) || value.Length > 9) return false;
             var regex = new Regex(pattern, RegexOptions.IgnoreCase);
             return regex.IsMatch(value);
         }

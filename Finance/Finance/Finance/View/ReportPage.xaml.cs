@@ -7,7 +7,6 @@ namespace Finance.View
         public ReportPage()
         {
             InitializeComponent();
-            BindingContext = new ReportViewModel();
         }
     }
 }

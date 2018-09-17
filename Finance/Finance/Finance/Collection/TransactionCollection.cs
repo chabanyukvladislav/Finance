@@ -68,10 +68,7 @@ namespace Finance.Collection
         {
             if (!await _connector.Edit(newItem))
                 return;
-            int index = _collection.IndexOf(_collection.FirstOrDefault(el => el.Id == newItem.Id));
-            for (int i = index - 1; i >= 0; --i)
-                _collection[i + 1] = _collection[i];
-            _collection[0] = newItem;
+            _collection[_collection.IndexOf(newItem)] = newItem;
         }
 
         private void OnPropertyChanged(string propertyName)

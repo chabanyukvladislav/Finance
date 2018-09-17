@@ -26,12 +26,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)DatabaseConnector\DatabaseTransactionTypeConnector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DatabaseConnector\IDatabaseConnector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Database_Context\Context.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enum\TypeOfSort.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\IDatabaseModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Transaction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\TransactionType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Validation\IValidationRule.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Validation\NumberValidator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Validation\ValidatableObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\BaseViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\MainViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\ReportViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\TransactionViewModel.cs" />

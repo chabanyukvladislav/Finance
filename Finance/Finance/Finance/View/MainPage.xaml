@@ -15,6 +15,19 @@
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <ListView ItemsSource="{Binding Transactions}" SelectedItem="{Binding SelectedItem}" Margin="10" x:Name="list">
+            <ListView.Header>
+                <Grid ColumnSpacing="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0" HorizontalTextAlignment="Center" Text="Date" FontAttributes="Bold"/>
+                    <Label Grid.Column="1" HorizontalTextAlignment="Center" Text="Type" FontAttributes="Bold"/>
+                    <Label Grid.Column="2" HorizontalTextAlignment="Center" Text="Ammount" FontAttributes="Bold"/>
+                </Grid>
+            </ListView.Header>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
